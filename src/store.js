@@ -1,8 +1,8 @@
 import { reactive } from "vue";
 
 export const store = reactive({
-  apiBaseUrl: "",
-  imgBaseUrl: "",
+  apiBaseGeo: "https://geocoding-api.open-meteo.com/v1/search",
+  
   
 
 });
