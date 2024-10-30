@@ -20,13 +20,19 @@
                 </div>
             </div>
             <!-- print the data (today and next 2 days) -->
-            <div class="col-4" v-for="(climate, index) in store.climate?.daily?.time" :key="index">
-                <div id="daily" class="text-center">{{ climate }}</div>
+            <div id="daily" class="col-4" v-for="(climate, index) in store.climate?.daily?.time" :key="index">
+                <div class="text-center">{{ climate }}</div>
             </div>
             <!-- print meteo condition -->
-            <div class="col-4" v-for="(weathercode, index) in store.climate?.daily?.weather_code" :key="index">
-                <div id="hourly" class="text-center">
+            <div id="hourly" class="col-4" v-for="(weathercode, index) in store.climate?.daily?.weather_code" :key="index">
+                <div class="text-center">
                     <img class="w-25" :src="changeImg(weathercode)" :alt="weathercode">
+                </div>
+            </div>
+            <div class="col-4" v-for="(climate, index) in store.climate?.daily?.temperature_2m_max" :key="index">
+                <div class="text-center d-flex justify-content-around ">
+                    <p class="text-center">Max {{climate}} °C</p>
+                    <p>Min: {{ store.climate?.daily?.temperature_2m_min[index] }} °C</p>
                 </div>
             </div>
 
