@@ -8,8 +8,6 @@
 
         <!-- daily component -->
         <DailyComponent />
-
-
     </div>
 </template>
 
@@ -31,12 +29,6 @@ import SearchBarComponent from '@/components/SearchBarComponent.vue';
             return {
                 store,
             }
-        },
-        methods: {
-            //this function call the api with the search bar
-           
-            // this function call the api with the coordinates from city array  and get the climate data
-           
         },
     }
 </script>

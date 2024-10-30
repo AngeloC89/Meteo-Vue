@@ -1,6 +1,7 @@
 <template>
     <header>
         <h1>Meteo-Vue</h1>
+       <router-link class="text-decoration-none" to="/favorites"> <h4>Preferiti</h4></router-link>
     </header>
 </template>
 
@@ -15,6 +16,10 @@ header{
     width: 100%;
     height: 80px;
     background-color: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
 
     h1{
         color: green;

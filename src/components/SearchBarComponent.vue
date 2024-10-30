@@ -18,6 +18,7 @@
             }
         },
         methods: {
+             //this function call the api with the search bar
             async fetchCity() {
                 if (this.store.options_city.params.name.length < 2) return;
                 try {
@@ -35,6 +36,7 @@
                 }
 
             },
+             // this function call the api with the coordinates from city array  and get the climate data
 
             async fetchClimate() {
 
