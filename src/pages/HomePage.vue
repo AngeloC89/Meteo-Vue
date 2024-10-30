@@ -9,31 +9,28 @@
         </section>
         <!-- section for show the city -->
 
-        <section id="show-info" class="row mx-auto">
-            <div v-if="store.city.length > 0">
-                <!-- shows the city and the current climate -->
-                <h1 class="text-center">{{ store.city[0].name }}</h1>
-                <div>
-                    <p class="text-center">Previsoni del {{ store.climate?.current?.time }}</p>
-                    <p class="text-center">Temperatura: {{ store.climate?.current?.temperature_2m }} °C</p>
-                    <p class="text-center">Umidità: {{ store.climate?.current?.relative_humidity_2m }} %</p>
-                </div>
-            </div>
+            <!-- current component -->
+
+            <CurrentComponent />
+
+        <section class="row mx-auto">
             <!-- print the data (today and next 2 days) -->
             <div id="daily" class="col-4" v-for="(climate, index) in store.climate?.daily?.time" :key="index">
                 <div class="text-center">{{ climate }}</div>
             </div>
             <!-- print meteo condition -->
-            <div id="hourly" class="col-4" v-for="(weathercode, index) in store.climate?.daily?.weather_code" :key="index">
+            <div id="hourly" class="col-4" v-for="(weathercode, index) in store.climate?.daily?.weather_code"
+                :key="index">
                 <div class="text-center">
                     <img class="w-25" :src="changeImg(weathercode)" :alt="weathercode">
                 </div>
             </div>
             <div class="col-4" v-for="(climate, index) in store.climate?.daily?.temperature_2m_max" :key="index">
                 <div class="text-center d-flex justify-content-around ">
-                    <p class="text-center">Max {{climate}} °C</p>
                     <p>Min: {{ store.climate?.daily?.temperature_2m_min[index] }} °C</p>
+                    <p class="text-center">Max: {{ climate }} °C</p>
                 </div>
+                <div class="text-center">Wind Max Speed: {{ store.climate?.daily?.wind_speed_10m_max[index] }} km/h</div>
             </div>
 
 
@@ -46,8 +43,13 @@
 <script>
     import { store } from '../store.js';
     import axios from 'axios';
+    import CurrentComponent from '@/components/CurrentComponent.vue';
     export default {
         name: 'HomePage',
+        components: {
+            CurrentComponent,
+        },
+
         data() {
             return {
                 store,
@@ -138,19 +140,10 @@
             }
         }
 
-        // section for show the city
-        #show-info {
-            width: 100%;
-            height: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+         .col-4 {
 
-            .col-4 {
-
-                background-color: sandybrown;
-                border: 1px solid black;
-            }
+            background-color: sandybrown;
+            border: 1px solid black;
         }
 
     }
