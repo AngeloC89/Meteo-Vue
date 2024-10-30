@@ -40,7 +40,7 @@ export const store = reactive({
       current:"temperature_2m,relative_humidity_2m",
       minutely: "60",
       hourly: "temperature_2m",
-      daily:"temperature_2m_max,temperature_2m_min,wind_speed_10m_max,wind_direction_10m_dominant",
+      daily:"temperature_2m_max,temperature_2m_min,wind_speed_10m_max,weather_code",
     },
   },
 

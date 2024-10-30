@@ -3,7 +3,7 @@
         <!-- section for search the city -->
         <section class="d-flex align-items-center justify-content-end">
             <div id="search">
-                <input type="search" v-model.trim="store.options_city.params.name">
+                <input type="search" v-model.trim="store.options_city.params.name" @keyup.enter="fetchCity">
                 <button @click="fetchCity">Search</button>
             </div>
         </section>
@@ -11,6 +11,7 @@
 
         <section id="show-info" class="row mx-auto">
             <div v-if="store.city.length > 0">
+                <!-- shows the city and the current climate -->
                 <h1 class="text-center">{{ store.city[0].name }}</h1>
                 <div>
                     <p class="text-center">Previsoni del {{ store.climate?.current?.time }}</p>
@@ -18,12 +19,17 @@
                     <p class="text-center">Umidità: {{ store.climate?.current?.relative_humidity_2m }} %</p>
                 </div>
             </div>
-
-            <div class="col-4">
-
+            <!-- print the data (today and next 2 days) -->
+            <div class="col-4" v-for="(climate, index) in store.climate?.daily?.time" :key="index">
+                <div id="daily" class="text-center">{{ climate }}</div>
             </div>
-            <div class="col-4"></div>
-            <div class="col-4"></div>
+            <!-- print meteo condition -->
+            <div class="col-4" v-for="(weathercode, index) in store.climate?.daily?.weather_code" :key="index">
+                <div id="hourly" class="text-center">
+                    <img class="w-25" :src="changeImg(weathercode)" :alt="weathercode">
+                </div>
+            </div>
+
 
         </section>
 
@@ -54,14 +60,13 @@
                     console.log(this.store.city);
                     this.store.options_climate.params.latitude = this.store.city[0].latitude;
                     this.store.options_climate.params.longitude = this.store.city[0].longitude;
-                    this.fetchClimate();
-
+                    this.fetchClimate();//This function is called after performing city search and finds the weather data for the city
                 } catch (error) {
                     console.error("Errore nel recupero dei dati", error);
                 }
 
             },
-
+            // this function call the api with the coordinates from city array  and get the climate data
             async fetchClimate() {
 
                 try {
@@ -75,7 +80,26 @@
                     console.error("Errore nel recupero dei dati", error);
                 }
             },
-        }
+
+            //this function change the weatercode in image
+            changeImg(weathercode) {
+                if (weathercode <= 20) {
+                    return 'images/sole.png';
+                } else if (weathercode > 20 && weathercode <= 40) {
+                    return 'images/leggermente coperto.png';
+
+                } else if (weathercode > 40 && weathercode <= 60) {
+                    return 'images/coperto.png';
+
+                } else if (weathercode > 60 && weathercode <= 80) {
+                    return 'images/pioggia.png';
+
+                } else {
+                    return 'images/temporale.png';
+                }
+
+            }
+        },
     }
 </script>
 
