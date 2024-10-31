@@ -1,13 +1,17 @@
 <template>
     <section id="show-info" class="row mx-auto">
-        <div v-if="store.city.length > 0">
+        <div v-if="store.city.name" class="d-flex flex-column justify-content-center align-items-center">
             <!-- shows the city and the current climate -->
-            <h1 class="text-center">{{ store.city[0].name }}</h1>
+            <h1 class="text-center">{{ store.city.name }}</h1>
             <div>
-                <p class="text-center">Previsoni del {{ store.climate?.current?.time }}</p>
                 <p class="text-center">Temperatura: {{ store.climate?.current?.temperature_2m }} °C</p>
                 <p class="text-center">Umidità: {{ store.climate?.current?.relative_humidity_2m }} %</p>
             </div>
+
+            <div>
+                 <button class="m-auto" @click="addToFavorites">Aggiungi ai preferiti</button>
+            </div>
+           
         </div>
     </section>
 </template>
@@ -20,7 +24,33 @@
             return {
                 store
             }
-        }
+        },
+        methods: {
+            addToFavorites(city) {
+                // Recupera i preferiti attuali, o inizializza con un array vuoto se non esiste.
+                this.store.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+                // check if the city is already in favorites
+                const CitySaved = this.favorites.some(
+                    (item) => item.lat === city.lat && item.lon === city.lon
+                );
+
+                if (!CitySaved) {
+                    //add cty to favorites
+                    favorites.push(city);
+                    //save the array in local storage
+                    localStorage.setItem('favorites', JSON.stringify(favorites));
+                    console.log(this.favorites);
+                    alert(`${city.name} è stata aggiunta ai preferiti!`);
+                } else {
+                    alert(`${city.name} è già tra i preferiti.`);
+                }
+            }
+            
+            
+        },
+
+        
     }
 </script>
 
@@ -34,6 +64,6 @@
         justify-content: center;
         align-items: center;
 
-       
+
     }
 </style>

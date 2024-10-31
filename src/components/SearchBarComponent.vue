@@ -18,7 +18,7 @@
             }
         },
         methods: {
-             //this function call the api with the search bar
+            //this function call the api with the search bar
             async fetchCity() {
                 if (this.store.options_city.params.name.length < 2) return;
                 try {
@@ -26,17 +26,21 @@
                         this.store.apiBaseSearch,
                         this.store.options_city
                     );
-                    this.store.city = response.data.results;
+                    this.store.city = {
+                        name: response.data.results[0].name, // supponendo che 'name' sia disponibile
+                        lat: response.data.results[0].latitude,
+                        lon: response.data.results[0].longitude
+                    };
                     console.log(this.store.city);
-                    this.store.options_climate.params.latitude = this.store.city[0].latitude;
-                    this.store.options_climate.params.longitude = this.store.city[0].longitude;
+                    this.store.options_climate.params.latitude = this.store.city.lat;
+                    this.store.options_climate.params.longitude = this.store.city.lon;
                     this.fetchClimate();//This function is called after performing city search and finds the weather data for the city
                 } catch (error) {
                     console.error("Errore nel recupero dei dati", error);
                 }
 
             },
-             // this function call the api with the coordinates from city array  and get the climate data
+            // this function call the api with the coordinates from city array  and get the climate data
 
             async fetchClimate() {
 
