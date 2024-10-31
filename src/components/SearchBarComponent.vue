@@ -27,14 +27,12 @@
                         this.store.options_city
                     );
                     this.store.city = {
-                        name: response.data.results[0].name, // supponendo che 'name' sia disponibile
+                        name: response.data.results[0].name,
                         lat: response.data.results[0].latitude,
                         lon: response.data.results[0].longitude
                     };
                     console.log(this.store.city);
-                    this.store.options_climate.params.latitude = this.store.city.lat;
-                    this.store.options_climate.params.longitude = this.store.city.lon;
-                    this.fetchClimate();//This function is called after performing city search and finds the weather data for the city
+                    this.fetchClimate(this.store.city.lat,this.store.city.lon );//This function is called after performing city search and finds the weather data for the city
                 } catch (error) {
                     console.error("Errore nel recupero dei dati", error);
                 }
@@ -42,7 +40,10 @@
             },
             // this function call the api with the coordinates from city array  and get the climate data
 
-            async fetchClimate() {
+            async fetchClimate(lat, lon) {
+                this.store.options_climate.params.latitude = lat;
+                this.store.options_climate.params.longitude = lon;
+               ;
 
                 try {
                     const response = await axios.get(
