@@ -9,7 +9,8 @@
             </div>
 
             <div>
-                 <button class="m-auto" @click="addToFavorites">Aggiungi ai preferiti</button>
+                <!-- this button add the city to favorites  -->
+                 <button class="m-auto" @click="addToFavorites(store.city)">Aggiungi ai preferiti</button>
             </div>
            
         </div>
@@ -22,7 +23,8 @@
         name: 'CurrentComponent',
         data() {
             return {
-                store
+                store,
+              
             }
         },
         methods: {
@@ -31,26 +33,22 @@
                 this.store.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 
                 // check if the city is already in favorites
-                const CitySaved = this.favorites.some(
+                const CitySaved = this.store.favorites.some(
                     (item) => item.lat === city.lat && item.lon === city.lon
                 );
 
                 if (!CitySaved) {
                     //add cty to favorites
-                    favorites.push(city);
+                    this.store.favorites.push(city);
                     //save the array in local storage
-                    localStorage.setItem('favorites', JSON.stringify(favorites));
-                    console.log(this.favorites);
+                    localStorage.setItem('favorites', JSON.stringify(this.store.favorites));
+                    console.log(this.store.favorites);
                     alert(`${city.name} è stata aggiunta ai preferiti!`);
                 } else {
                     alert(`${city.name} è già tra i preferiti.`);
                 }
-            }
-            
-            
-        },
-
-        
+            }        
+        },     
     }
 </script>
 

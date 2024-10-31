@@ -3,9 +3,9 @@
         <div class="d-flex align-items-center justify-content-center">
             <h1 class="text-center">Favorites</h1>
         </div>
-        <div class="d-flex align-items-center justify-content-start">
+        <div class="d-flex align-items-center justify-content-start" v-for="favorite in store.favorites" :key="favorite.id">
             <div id="favorites">
-                <h2>MAH</h2>
+                <h2>{{ favorite.name }}</h2>
 
             </div>
         </div>
@@ -21,11 +21,15 @@
         data() {
             return {
                 store,
-                favorites: [],
+              
             }
         },
 
         methods: {
+            getFavorites() {
+                this.store.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+            }
             
 
 
@@ -33,7 +37,7 @@
 
         },
         mounted() {
-            this.getFovorites();
+            this.getFavorites();
         },
     }
 </script>
