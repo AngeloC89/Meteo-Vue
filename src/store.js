@@ -23,6 +23,7 @@ export const store = reactive({
   city: {},
   climate: [],
   favorites: [],
+  loading: true,
 
   methods: {
     changeImg(weathercode) {

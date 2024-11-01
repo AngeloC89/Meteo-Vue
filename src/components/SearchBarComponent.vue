@@ -20,7 +20,9 @@
         methods: {
             //this function call the api with the search bar
             async fetchCity() {
+                
                 if (this.store.options_city.params.name.length < 2) return;
+                this.store.loading = false;
                 try {
                     const response = await axios.get(
                         this.store.apiBaseSearch,
@@ -35,6 +37,8 @@
                     this.fetchClimate(this.store.city.lat,this.store.city.lon );//This function is called after performing city search and finds the weather data for the city
                 } catch (error) {
                     console.error("Errore nel recupero dei dati", error);
+                } finally {
+                    
                 }
 
             },
@@ -54,6 +58,8 @@
                     console.log(this.store.climate);
                 } catch (error) {
                     console.error("Errore nel recupero dei dati", error);
+                } finally {
+                    this.store.loading = true;
                 }
             },
         }

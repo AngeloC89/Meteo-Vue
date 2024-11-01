@@ -36,8 +36,9 @@ import SearchBarComponent from '@/components/SearchBarComponent.vue';
 <style lang="scss" scoped>
     #home {
         width: 100%;
-        height: 100vh;
+        height: 100%;
         background-color: rgb(168, 165, 165);
+        padding: 50px;
 
     }
 </style>

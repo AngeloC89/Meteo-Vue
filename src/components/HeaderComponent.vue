@@ -22,12 +22,13 @@
 <style lang="scss" scoped>
     header {
         width: 100%;
-        height: 80px;
+        height: 60px;
         background-color: black;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px;
+        padding: 10px;
+        position: fixed;
 
         h1 {
             color: green;

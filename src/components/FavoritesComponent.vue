@@ -39,6 +39,7 @@
         methods: {
             //riempie l'array con le città preferite all'avvio della pagina
             async getFavorites() {
+                this.store.loading = false;
                 this.store.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
                 this.data_weater = [];
 
@@ -64,16 +65,22 @@
                     this.data_weater = results; // Riempie data_weater con i risultati
                 } catch (error) {
                     console.error("Errore nel recupero dei dati meteo: ", error);
+                } finally {
+                   this.store.loading = true;
                 }
 
+                this.sortFavorites();     
+                //debug
+                console.log(this.data_weater);
+            },
+
+            sortFavorites() { 
                 // Ordina l'array in base alla temperatura 
                 this.data_weater.sort((a, b) => {
                     const tempA = a.data.daily.temperature_2m_max[0];
                     const tempB = b.data.daily.temperature_2m_max[0];
                     return this.toggle ? tempB - tempA : tempA - tempB;
                 });
-                //debug
-                console.log(this.data_weater);
             },
 
 
@@ -103,8 +110,8 @@
             },
 
             toggleFavorites() {
-                this.getFavorites();
-                this.toggle = !this.toggle;
+                             this.toggle = !this.toggle;
+                             this.sortFavorites();
             },
             
 

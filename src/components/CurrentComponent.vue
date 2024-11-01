@@ -57,7 +57,7 @@
     // section for show the city
     #show-info {
         width: 100%;
-        height: 300px;
+        height: 200px;
         display: flex;
         justify-content: center;
         align-items: center;
