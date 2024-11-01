@@ -8,7 +8,7 @@
         <div class="col-4" v-for="(weathercode, index) in store.climate?.daily?.weather_code"
             :key="index">
             <div class="text-center">
-                <img class="w-25" :src="changeImg(weathercode)" :alt="weathercode">
+                <img class="w-25" :src="store.methods.changeImg(weathercode)" :alt="weathercode">
             </div>
      
             <div class="text-center d-flex justify-content-around ">
@@ -28,26 +28,6 @@
         data() {
             return {
                 store
-            }
-        },
-        methods: {
-            //this function change the weatercode in image
-            changeImg(weathercode) {
-                if (weathercode <= 20) {
-                    return 'images/sole.png';
-                } else if (weathercode > 20 && weathercode <= 40) {
-                    return 'images/leggermente coperto.png';
-
-                } else if (weathercode > 40 && weathercode <= 60) {
-                    return 'images/coperto.png';
-
-                } else if (weathercode > 60 && weathercode <= 80) {
-                    return 'images/pioggia.png';
-
-                } else {
-                    return 'images/temporale.png';
-                }
-
             }
         },
     }
