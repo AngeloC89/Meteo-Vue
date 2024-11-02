@@ -41,6 +41,7 @@
                         const messageElement = document.getElementById("message");
                         messageElement.classList.add("alert-danger");
                         messageElement.innerHTML = "City not found"; // Imposta il messaggio di errore
+                        return;
                     };
 
 

@@ -1,6 +1,6 @@
 <template>
   <div id="chart">
-    <h5>Andamento delle Temperature in 24 Ore</h5>
+    <h5 v-if="store.temperatures.length > 0" >Andamento delle Temperature in 24 Ore</h5>
     <canvas id="temperatureChart"></canvas>
   </div>
 </template>
@@ -18,7 +18,7 @@
       return {
         store,
         temperatures: [],
-        labels: Array.from({ length: 24 }, (_, i) => `${i}:00`), // Etichette per le ore
+        labels: Array.from({ length: 25 }, (_, i) => `${i}:00`), // Etichette per le ore
         chart: null,
 
       };
@@ -124,7 +124,7 @@
     max-width: 900px;
     margin: 20px auto;
     text-align: center;
-    background-color: rgb(205, 201, 201);
+    background-color: rgb(168, 165, 165);
   }
 
   canvas {

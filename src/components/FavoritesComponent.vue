@@ -70,15 +70,15 @@
                 } catch (error) {
                     console.error("Errore nel recupero dei dati meteo: ", error);
                 } finally {
-                   this.store.loading = false;
+                    this.store.loading = false;
                 }
 
-                this.sortFavorites();     
+                this.sortFavorites();
                 //debug
                 console.log(this.data_weater);
             },
 
-            sortFavorites() { 
+            sortFavorites() {
                 // Ordina l'array in base alla temperatura 
                 this.data_weater.sort((a, b) => {
                     const tempA = a.data.daily.temperature_2m_max[0];
@@ -112,11 +112,14 @@
             },
 
             toggleFavorites() {
-                             this.toggle = !this.toggle;
-                             this.sortFavorites();
+                this.toggle = !this.toggle;
+                localStorage.setItem('toggle', JSON.stringify(this.toggle)); // Salva lo stato in localStorage
+                this.sortFavorites();
             },
         },
         mounted() {
+            this.toggle = JSON.parse(localStorage.getItem('toggle'));
+            this.sortFavorites();
             this.getFavorites();
 
         },
@@ -129,7 +132,7 @@
         width: 100%;
         height: 100%;
         margin-top: 100px;
-      
+
 
 
 
@@ -152,7 +155,7 @@
             font-size: 20px;
             border: 1px solid black;
             border-radius: 30px;
-            
+
 
             #city {
                 width: 130px;
@@ -170,17 +173,22 @@
             p {
                 margin: 0 30px;
 
-                i{
-                    background: linear-gradient(180deg, #ff0000, #0051ff); /* Colori del gradiente */
-                    -webkit-background-clip: text; /* Ritaglia il background per mostrare solo il testo */
-                    color: transparent; /* Rende il testo trasparente */
-                    display: inline-block; /* Necessario per il clipping */
-    
+                i {
+                    background: linear-gradient(180deg, #ff0000, #0051ff);
+                    /* Colori del gradiente */
+                    background-clip: text;
+                    -webkit-background-clip: text;
+                    /* Ritaglia il background per mostrare solo il testo */
+                    color: transparent;
+                    /* Rende il testo trasparente */
+                    display: inline-block;
+                    /* Necessario per il clipping */
+
                 }
-            
+
             }
 
-            #delete{
+            #delete {
                 aspect-ratio: 1;
             }
 
