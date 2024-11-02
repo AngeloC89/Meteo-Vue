@@ -109,7 +109,7 @@
     // Distruggi il grafico quando il componente viene smontato
     beforeUnmount() {
       if (this.chart) {
-        this.chart.destroy();
+        this.chart.destroy();//destroy the instance of the chart
         this.chart = null; // Rimuove il riferimento al grafico
       }
     },

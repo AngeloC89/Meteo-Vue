@@ -26,6 +26,7 @@ export const store = reactive({
   loading: false,
 
   options_city: {
+    timeout: 5000,
     params: {
       name: "",
       count: 1, // Numero di risultati che vogliamo

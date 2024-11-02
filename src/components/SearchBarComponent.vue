@@ -1,7 +1,11 @@
 <template>
     <section class="d-flex align-items-center justify-content-end">
         <div id="search">
-            <input placeholder="Search a city" type="search" v-model.trim="store.options_city.params.name" @keyup.enter="fetchCity">
+            <div>
+                <input id="notfound" placeholder="Search a city" type="search"
+                    v-model.trim="store.options_city.params.name" @keyup.enter="fetchCity">
+                <span for="notfound" id="message"></span>
+            </div>
             <button @click="fetchCity">Search</button>
         </div>
     </section>
@@ -20,7 +24,8 @@
         methods: {
             //this function call the api with the search bar
             async fetchCity() {
-                
+                document.getElementById("message").innerHTML = "";
+
                 if (this.store.options_city.params.name.length < 2) return;
                 this.store.loading = true;//loader on
                 try {
@@ -29,21 +34,33 @@
                         this.store.apiBaseSearch,
                         this.store.options_city
                     );
-                    
+
+
+                    //console.log(response.data.results[0]);
+                    if (!response.data.results) {
+                        const messageElement = document.getElementById("message");
+                        messageElement.classList.add("alert-danger");
+                        messageElement.innerHTML = "City not found"; // Imposta il messaggio di errore
+                    };
+
+
+                    const results = response.data.results[0] || {};
+
                     //create a city object
                     this.store.city = {
-                        name: response.data.results[0].name,
-                        lat: response.data.results[0].latitude,
-                        lon: response.data.results[0].longitude
+                        name: results.name,
+                        lat: results.latitude,
+                        lon: results.longitude
                     };
 
 
 
                     console.log(this.store.city);
-                    this.fetchClimate(this.store.city.lat,this.store.city.lon );//This function is called after performing city search and finds the weather data for the city
+                    this.fetchClimate(this.store.city.lat, this.store.city.lon);//This function is called after performing city search and finds the weather data for the city
                 } catch (error) {
                     console.error("Errore nel recupero dei dati", error);
                 } finally {
+                    this.store.loading = false;//loader off
                     this.store.options_city.params.name = "";
                 }
 
@@ -51,9 +68,10 @@
             // this function call the api with the coordinates from city array  and get the climate data
 
             async fetchClimate(lat, lon) {
+
                 this.store.options_climate.params.latitude = lat;
                 this.store.options_climate.params.longitude = lon;
-               ;
+                ;
 
                 try {
                     const response = await axios.get(
@@ -65,14 +83,14 @@
                     console.log(this.store.climate);
                     console.log(this.store.temperatures.slice(0, 24));
 
-                    
+
                 } catch (error) {
                     console.error("Errore nel recupero dei dati", error);
                 } finally {
-                    this.store.loading = false;//loader off
+
                 }
             },
-            
+
         }
     }
 </script>
@@ -95,10 +113,27 @@
             margin-right: 15px;
         }
 
-        button {
-            width: 100px;
-            height: 40px;
-            font-size: 20px;
+        #message {
+            width: 300px;
+            height: 20px;
+            font-size: 17px;
+            text-align: start;
+            color: red;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0px;
+            position: absolute;
+            right: 445px;
         }
+
+
     }
+
+    button {
+        width: 100px;
+        height: 40px;
+        font-size: 20px;
+    }
+
 </style>
