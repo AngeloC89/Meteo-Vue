@@ -3,7 +3,7 @@
         <div v-if="store.city.name" class="d-flex flex-column justify-content-center align-items-center">
             <!-- shows the city and the current climate -->
             <h1 class="text-center">{{ store.city.name }}</h1>
-            <div>
+            <div class="d-flex gap-5">
                 <p class="text-center">Temperatura: {{ store.climate?.current?.temperature_2m }} °C</p>
                 <p class="text-center">Umidità: {{ store.climate?.current?.relative_humidity_2m }} %</p>
             </div>
@@ -57,7 +57,7 @@
     // section for show the city
     #show-info {
         width: 100%;
-        height: 200px;
+        height: 130px;
         display: flex;
         justify-content: center;
         align-items: center;

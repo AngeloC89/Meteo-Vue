@@ -15,10 +15,12 @@
     components: {
       HeaderComponent,
       MainComponent
-    }
+    },
   }
 </script>
 
 <style lang="scss" scoped>
+
+
 
 </style>

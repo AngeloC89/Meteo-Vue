@@ -1,13 +1,12 @@
 <template>
     <header>
-        <h1>Meteo-Vue</h1>
+        <h1 class="ms-3">Meteo-Vue</h1>
         <div class="d-flex gap-5">
-            <router-link class="text-decoration-none" to="/">
-                <h4>Home</h4>
-            </router-link>
-            <router-link class="text-decoration-none" to="/favorites">
-                <h4>Preferiti</h4>
-            </router-link>
+            <div class="me-3" v-for="(link, index) in links" :key="index">
+                <router-link class="text-decoration-none" :to="link.url">
+                    <h4>{{ link.name }}</h4>
+                </router-link>
+            </div>
         </div>
 
     </header>
@@ -15,8 +14,23 @@
 
 <script>
     export default {
-        name: 'HeaderComponent'
+        name: 'HeaderComponent',
+        data() {
+            return {
+                links: [
+                    {
+                        name: 'Home',
+                        url: '/'
+                    },
+                    {
+                        name: 'Preferiti',
+                        url: '/favorites'
+                    }
+                ],
+            }
+        },
     }
+
 </script>
 
 <style lang="scss" scoped>

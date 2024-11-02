@@ -1,17 +1,16 @@
 import { reactive } from "vue";
+import axios from "axios";
 
+function getCurrentDate() {
+  const today = new Date();
+  return today.toISOString().split("T")[0];
+}
 
- function getCurrentDate() {
-    const today = new Date();
-    return today.toISOString().split("T")[0];
-  }
-
- function getEndDate(startDate) {
-    const endDate = new Date(startDate);
-    endDate.setDate(endDate.getDate() + 2); // Aggiungi 2 giorni
-    return endDate.toISOString().split("T")[0];
-  }
-
+function getEndDate(startDate) {
+  const endDate = new Date(startDate);
+  endDate.setDate(endDate.getDate() + 2); // Aggiungi 2 giorni
+  return endDate.toISOString().split("T")[0];
+}
 
 //funzione per la data odierna in formato yyyy-mm-dd
 
@@ -23,25 +22,8 @@ export const store = reactive({
   city: {},
   climate: [],
   favorites: [],
-  loading: true,
-
-  methods: {
-    changeImg(weathercode) {
-      if (weathercode <= 20) {
-        return "images/sole.png";
-      } else if (weathercode > 20 && weathercode <= 40) {
-        return "images/leggermente coperto.png";
-      } else if (weathercode > 40 && weathercode <= 60) {
-        return "images/coperto.png";
-      } else if (weathercode > 60 && weathercode <= 80) {
-        return "images/pioggia.png";
-      } else {
-        return "images/temporale.png";
-      }
-    }
-  },
-
-  
+  temperatures: [],
+  loading: false,
 
   options_city: {
     params: {
@@ -66,5 +48,23 @@ export const store = reactive({
       daily:
         "temperature_2m_max,temperature_2m_min,wind_speed_10m_max,weather_code",
     },
+  },
+
+  methods: {
+    changeImg(weathercode) {
+      if (weathercode <= 20) {
+        return "images/sole.png";
+      } else if (weathercode > 20 && weathercode <= 40) {
+        return "images/leggermente coperto.png";
+      } else if (weathercode > 40 && weathercode <= 60) {
+        return "images/coperto.png";
+      } else if (weathercode > 60 && weathercode <= 80) {
+        return "images/pioggia.png";
+      } else {
+        return "images/temporale.png";
+      }
+    },
+
+  
   },
 });

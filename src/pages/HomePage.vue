@@ -8,6 +8,9 @@
 
         <!-- daily component -->
         <DailyComponent />
+
+        <!-- charts component -->
+        <ChartsComponent  />
     </div>
 </template>
 
@@ -16,13 +19,15 @@
     import axios from 'axios';
     import CurrentComponent from '@/components/CurrentComponent.vue';
     import DailyComponent from '@/components/DailyComponent.vue';
-import SearchBarComponent from '@/components/SearchBarComponent.vue';
+    import SearchBarComponent from '@/components/SearchBarComponent.vue';
+    import ChartsComponent from '@/components/ChartsComponent.vue';
     export default {
         name: 'HomePage',
         components: {
             SearchBarComponent,
             CurrentComponent,
-            DailyComponent
+            DailyComponent,
+            ChartsComponent,
         },
 
         data() {
@@ -38,7 +43,10 @@ import SearchBarComponent from '@/components/SearchBarComponent.vue';
         width: 100%;
         height: 100%;
         background-color: rgb(168, 165, 165);
-        padding: 50px;
+        padding: 30px;
+        border: 1px solid rgb(0, 0, 0);
+        margin-top: 28px;
+
 
     }
 </style>

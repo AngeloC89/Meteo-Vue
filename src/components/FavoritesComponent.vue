@@ -3,8 +3,11 @@
         <div class="d-flex align-items-center justify-content-center">
             <h1 class="text-center">Favorites</h1>
         </div>
+        <div>
+            <h3 class="text-center">{{ date }}</h3>
+        </div>
         <div id="toggle">
-            <button type="button" class="btn btn-outline-success" @click="toggleFavorites">{{ toggle ? 'Ordina per Temperatura più bassa' : 'Ordina per Temperatura più alta)' }}
+            <button type="button" class="btn btn-outline-success" @click="toggleFavorites">{{ toggle ? 'Ordina per temperatura più bassa' : 'Ordina per temperatura più alta' }}
             </button>
         </div>
         <div class="d-flex align-items-center justify-content-center" v-for="(city, index) in data_weater" :key="index">
@@ -16,7 +19,7 @@
                 <p><i class="fa-solid fa-temperature-low fs-2"></i> {{ city.data.current.temperature_2m }} C°</p>
                 <p>Wind Max Speed: {{ city.data.daily.wind_speed_10m_max[0] }} km/h</p>
                 <p>Humidity: {{ city.data.current.relative_humidity_2m }} %</p>
-                <button class="btn btn-outline-danger" @click="deleteFavorites(city)"><i
+                <button id="delete" class="btn btn-outline-danger rounded-circle" @click="deleteFavorites(city)"><i
                         class="fa-solid fa-circle-xmark fs-3"></i></button>
             </div>
         </div>
@@ -33,13 +36,14 @@
                 store,
                 data_weater: [],
                 toggle: false,
+                date: new Date().toISOString().split("T")[0],
             }
         },
 
         methods: {
             //riempie l'array con le città preferite all'avvio della pagina
             async getFavorites() {
-                this.store.loading = false;
+                this.store.loading = true;
                 this.store.favorites = JSON.parse(localStorage.getItem('favorites')) || [];
                 this.data_weater = [];
 
@@ -66,7 +70,7 @@
                 } catch (error) {
                     console.error("Errore nel recupero dei dati meteo: ", error);
                 } finally {
-                   this.store.loading = true;
+                   this.store.loading = false;
                 }
 
                 this.sortFavorites();     
@@ -82,8 +86,6 @@
                     return this.toggle ? tempB - tempA : tempA - tempB;
                 });
             },
-
-
             deleteFavorites(city) {
 
                 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -113,10 +115,7 @@
                              this.toggle = !this.toggle;
                              this.sortFavorites();
             },
-            
-
         },
-
         mounted() {
             this.getFavorites();
 
@@ -127,6 +126,11 @@
 
 <style lang="scss" scoped>
     .container {
+        width: 100%;
+        height: 100%;
+        margin-top: 100px;
+      
+
 
 
         #toggle {
@@ -148,6 +152,7 @@
             font-size: 20px;
             border: 1px solid black;
             border-radius: 30px;
+            
 
             #city {
                 width: 130px;
@@ -164,8 +169,21 @@
 
             p {
                 margin: 0 30px;
+
+                i{
+                    background: linear-gradient(180deg, #ff0000, #0051ff); /* Colori del gradiente */
+                    -webkit-background-clip: text; /* Ritaglia il background per mostrare solo il testo */
+                    color: transparent; /* Rende il testo trasparente */
+                    display: inline-block; /* Necessario per il clipping */
+    
+                }
             
             }
+
+            #delete{
+                aspect-ratio: 1;
+            }
+
         }
 
     }

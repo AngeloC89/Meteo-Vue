@@ -1,7 +1,7 @@
 <template>
     <section class="d-flex align-items-center justify-content-end">
         <div id="search">
-            <input type="search" v-model.trim="store.options_city.params.name" @keyup.enter="fetchCity">
+            <input placeholder="Search a city" type="search" v-model.trim="store.options_city.params.name" @keyup.enter="fetchCity">
             <button @click="fetchCity">Search</button>
         </div>
     </section>
@@ -22,23 +22,29 @@
             async fetchCity() {
                 
                 if (this.store.options_city.params.name.length < 2) return;
-                this.store.loading = false;
+                this.store.loading = true;//loader on
                 try {
                     const response = await axios.get(
+                        //API url
                         this.store.apiBaseSearch,
                         this.store.options_city
                     );
+                    
+                    //create a city object
                     this.store.city = {
                         name: response.data.results[0].name,
                         lat: response.data.results[0].latitude,
                         lon: response.data.results[0].longitude
                     };
+
+
+
                     console.log(this.store.city);
                     this.fetchClimate(this.store.city.lat,this.store.city.lon );//This function is called after performing city search and finds the weather data for the city
                 } catch (error) {
                     console.error("Errore nel recupero dei dati", error);
                 } finally {
-                    
+                    this.store.options_city.params.name = "";
                 }
 
             },
@@ -55,13 +61,18 @@
                         this.store.options_climate
                     );
                     this.store.climate = response.data;
+                    this.store.temperatures = response.data.hourly.temperature_2m;
                     console.log(this.store.climate);
+                    console.log(this.store.temperatures.slice(0, 24));
+
+                    
                 } catch (error) {
                     console.error("Errore nel recupero dei dati", error);
                 } finally {
-                    this.store.loading = true;
+                    this.store.loading = false;//loader off
                 }
             },
+            
         }
     }
 </script>
@@ -71,10 +82,11 @@
     // section for search the city
     #search {
         width: 500px;
-        height: 200px;
+        height: 40px;
         display: flex;
         justify-content: end;
         align-items: center;
+        margin: 5px;
 
         input {
             width: 300px;
