@@ -24,6 +24,13 @@
       };
     },
 
+    async mounted() {
+      // Renderizza il grafico se ci sono dati disponibili
+      if (this.store.temperatures && this.store.temperatures.length > 0) {
+        this.renderChart();
+      }
+    },
+
     methods: {
 
 
