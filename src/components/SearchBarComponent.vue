@@ -2,11 +2,12 @@
     <section class="d-flex align-items-center justify-content-end">
         <div id="search">
             <div>
-                <input id="notfound" placeholder="Search a city" type="search"
-                    v-model.trim="store.options_city.params.name" @keyup.enter="fetchCity">
+                <input id="notfound" placeholder="Search a city..." type="search" class="form-control"
+                    aria-label="Cerca..." v-model.trim="store.options_city.params.name" @keyup.enter="fetchCity">
                 <span for="notfound" id="message"></span>
             </div>
-            <button @click="fetchCity">Search</button>
+            <button class="btn btn-outline-secondary" @click="fetchCity"><i
+                    class="fa-solid fa-magnifying-glass"></i></button>
         </div>
     </section>
 </template>
@@ -40,7 +41,7 @@
                     if (!response.data.results) {
                         const messageElement = document.getElementById("message");
                         messageElement.classList.add("alert-danger");
-                        messageElement.innerHTML = "City not found"; // Imposta il messaggio di errore
+                        messageElement.innerHTML = "City not found";
                         return;
                     };
 
@@ -125,7 +126,8 @@
             align-items: center;
             padding: 0px;
             position: absolute;
-            right: 445px;
+            right: 436px;
+            top: 155px;
         }
 
 

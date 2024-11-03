@@ -1,6 +1,6 @@
 <template>
   <div id="chart">
-    <h5 v-if="store.temperatures.length > 0" >Andamento delle Temperature in 24 Ore</h5>
+    <h5 v-if="store.temperatures.length > 0">Andamento delle Temperature in 24 Ore</h5>
     <canvas id="temperatureChart"></canvas>
   </div>
 </template>
@@ -18,14 +18,14 @@
       return {
         store,
         temperatures: [],
-        labels: Array.from({ length: 25 }, (_, i) => `${i}:00`), // Etichette per le ore
+        labels: Array.from({ length: 25 }, (_, i) => `${i}:00`),
         chart: null,
 
       };
     },
 
     async mounted() {
-      // Renderizza il grafico se ci sono dati disponibili
+      // render the chart when the component is mounted
       if (this.store.temperatures && this.store.temperatures.length > 0) {
         this.renderChart();
       }
@@ -35,7 +35,7 @@
 
 
       renderChart() {
-        // Controlla se il canvas è disponibile
+        // check if the canvas exists
         const canvas = document.getElementById('temperatureChart');
         if (!canvas) {
           console.warn("Canvas non trovato. Il grafico non può essere renderizzato.");
@@ -45,28 +45,28 @@
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
-        // Controlla se il contesto è valido
+        // check if the chart already exists
         if (!ctx) {
           console.warn("Elemento canvas non trovato.");
           return;
         }
 
-        // Distruggi l'istanza precedente del grafico se esiste
+        // destroy the chart if it already exists
         if (this.chart) {
           this.chart.destroy();
         }
 
-        // Crea un nuovo grafico
+        // create the chart
         this.chart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: this.labels, // Assicurati che labels contenga 24 valori
+            labels: this.labels,
             datasets: [{
               label: 'Temperatura (°C)',
-              data: this.store.temperatures, // Assicurati che temperatures contenga 24 valori
+              data: this.store.temperatures,
               fill: false,
-              borderColor: 'rgb(0, 0, 0)', // Colore della linea
-              tension: 0.5, // Tensione per la curvatura della linea
+              borderColor: 'rgb(0, 0, 0)',
+              tension: 0.5,
             }],
           },
           options: {
@@ -80,13 +80,13 @@
                 },
                 title: {
                   display: true,
-                  text: 'Temperatura (°C)', // Titolo dell'asse Y
+                  text: 'Temperatura (°C)',
                 },
               },
               x: {
                 title: {
                   display: true,
-                  text: 'Ora', // Titolo dell'asse X
+                  text: 'Ora',
                 },
               },
             },
@@ -98,19 +98,19 @@
     watch: {
       'store.temperatures': {
         handler(newVal) {
-          if (newVal.length > 0) { // Controlla che ci siano dati
-            this.renderChart(); // Esegui il rendering solo se ci sono dati
+          if (newVal.length > 0) {
+            this.renderChart(); // render the chart
           }
         },
-        immediate: true, // Esegui il watcher anche al caricamento iniziale
+        immediate: true, // render the chart immediately
       },
     },
 
-    // Distruggi il grafico quando il componente viene smontato
+    // destroy the chart when the component is unmounted
     beforeUnmount() {
       if (this.chart) {
         this.chart.destroy();//destroy the instance of the chart
-        this.chart = null; // Rimuove il riferimento al grafico
+        this.chart = null; // remove the reference to the chart
       }
     },
 
@@ -124,7 +124,7 @@
     max-width: 900px;
     margin: 20px auto;
     text-align: center;
-    background-color: rgb(168, 165, 165);
+    background-color: rgba(218, 218, 218, 0.117);
   }
 
   canvas {

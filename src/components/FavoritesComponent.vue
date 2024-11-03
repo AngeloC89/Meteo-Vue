@@ -1,10 +1,10 @@
 <template>
     <div class="container">
         <div class="d-flex align-items-center justify-content-center">
-            <h1 class="text-center">Favorites</h1>
+            <h1 class="text-center">I tuoi preferiti</h1>
         </div>
         <div>
-            <h3 class="text-center">{{ date }}</h3>
+            <h3 class="text-center">aggiornato alle {{ this.clock }}</h3>
         </div>
         <div id="toggle">
             <button type="button" class="btn btn-outline-success" @click="toggleFavorites">{{ toggle ? 'Ordina per temperatura più bassa' : 'Ordina per temperatura più alta' }}
@@ -12,6 +12,7 @@
         </div>
         <div class="d-flex align-items-center justify-content-center" v-for="(city, index) in data_weater" :key="index">
             <div id="favorites">
+                <!--data_weater contains current, daily and hourly weather data. Using the current data dynamically we will always get up to date data -->
                 <h4 id="city">{{ city.city }}</h4>
                 <div id="img">
                     <img class="img-fluid mx-3" :src="store.methods.changeImg(city.data.daily.weather_code[0])" alt="">
@@ -36,7 +37,8 @@
                 store,
                 data_weater: [],
                 toggle: false,
-                date: new Date().toISOString().split("T")[0],
+                clock: null,
+                
             }
         },
 
@@ -119,6 +121,9 @@
         },
         mounted() {
             this.toggle = JSON.parse(localStorage.getItem('toggle'));
+            this.clock = this.store.date_time.toLocaleTimeString('it-IT', {
+                hour: '2-digit', minute: '2-digit'});  
+             
             this.sortFavorites();
             this.getFavorites();
 

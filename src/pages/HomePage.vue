@@ -42,9 +42,9 @@
     #home {
         width: 100%;
         height: 100%;
-        background-color: rgb(168, 165, 165);
+       // background-color: rgba(218, 218, 218, 0.418);
         padding: 30px;
-        border: 1px solid rgb(0, 0, 0);
+        //border: 1px solid rgb(0, 0, 0);
         margin-top: 28px;
 
 

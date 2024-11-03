@@ -19,12 +19,14 @@ export const store = reactive({
   apiBaseClimate: "https://api.open-meteo.com/v1/forecast",
   //devo creare due variabili per recuperare prima i dati dalla ricerca...
   //ad esempio longit e latid... e poi usarli per costruire url di climate.
-  city: {},
-  climate: [],
+  city: {},//coordinates of the city
+  climate: [],//weater data
+  date_time: new Date(),//date today
   favorites: [],
   temperatures: [],
   loading: false,
 
+  //endpoint
   options_city: {
     timeout: 5000,
     params: {

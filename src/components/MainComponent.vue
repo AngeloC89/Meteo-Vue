@@ -30,6 +30,7 @@
         height: 100%;
         width: 100%;
         overflow: hidden;
+        padding: 50px 0px;
         
 
         #loader {

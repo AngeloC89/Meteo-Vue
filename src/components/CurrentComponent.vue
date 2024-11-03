@@ -1,5 +1,5 @@
 <template>
-    <section id="show-info" class="row mx-auto">
+    <section id="show-info" class="row mx-auto my-5">
         <div v-if="store.city.name" class="d-flex flex-column justify-content-center align-items-center">
             <!-- shows the city and the current climate -->
             <h1 class="text-center">{{ store.city.name }}</h1>
@@ -10,7 +10,7 @@
 
             <div>
                 <!-- this button add the city to favorites  -->
-                 <button class="m-auto" @click="addToFavorites(store.city)">Aggiungi ai preferiti</button>
+                 <button class="m-auto btn btn-outline-secondary" @click="addToFavorites(store.city)">Aggiungi ai preferiti</button>
             </div>
            
         </div>
@@ -57,7 +57,7 @@
     // section for show the city
     #show-info {
         width: 100%;
-        height: 130px;
+        height: 150px;
         display: flex;
         justify-content: center;
         align-items: center;
