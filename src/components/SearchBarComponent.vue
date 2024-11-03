@@ -1,13 +1,14 @@
 <template>
-    <section class="d-flex align-items-center justify-content-end">
+    <section class="d-flex align-items-center justify-content-center justify-content-md-end ">
         <div id="search">
-            <div>
-                <input id="notfound" placeholder="Search a city..." type="search" class="form-control"
+            <div class="d-flex">
+                <input placeholder="Search a city..." type="search" class="form-control w-75 w-md-100"
                     aria-label="Cerca..." v-model.trim="store.options_city.params.name" @keyup.enter="fetchCity">
-                <span for="notfound" id="message"></span>
+
+                <button class="btn btn-outline-secondary" @click="fetchCity"><i
+                        class="fa-solid fa-magnifying-glass"></i></button>
             </div>
-            <button class="btn btn-outline-secondary" @click="fetchCity"><i
-                    class="fa-solid fa-magnifying-glass"></i></button>
+            <span id="message"></span>
         </div>
     </section>
 </template>
@@ -104,6 +105,7 @@
         width: 500px;
         height: 40px;
         display: flex;
+        flex-direction: column;
         justify-content: end;
         align-items: center;
         margin: 5px;
@@ -116,7 +118,7 @@
         }
 
         #message {
-            width: 300px;
+            width: 325px;
             height: 20px;
             font-size: 17px;
             text-align: start;
@@ -125,9 +127,9 @@
             justify-content: center;
             align-items: center;
             padding: 0px;
-            position: absolute;
-            right: 436px;
-            top: 155px;
+            display: flex;
+            justify-content: start;
+            align-items: center;
         }
 
 

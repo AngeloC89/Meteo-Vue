@@ -1,6 +1,6 @@
 <template>
     <header>
-        <nav class="navbar navbar-expand-md bg-light">
+        <nav class="navbar navbar-expand-md bg-light" id="navbar">
             <div class="container-fluid">
                 <h1 class="ms-3">Meteo-Vue</h1>
                 <button
@@ -11,11 +11,12 @@
                     aria-controls="navbarContent"
                     aria-expanded="false"
                     aria-label="Toggle navigation"
+                    @click="toggleBackdrop"
                 >
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarContent">
-                    <div class="navbar-nav ms-auto d-flex gap-3">
+                    <div id="navbarLink" class="navbar-nav ms-auto d-flex gap-3 bg-light">
                         <div v-for="(link, index) in links" :key="index">
                             <router-link class="nav-link text-decoration-none" :to="link.url">
                                 <h4 class="h5">{{ link.name }}</h4>
@@ -25,6 +26,7 @@
                 </div>
             </div>
         </nav>
+        <div id="backdrop" class="backdrop d-none"></div>
     </header>
 </template>
 
@@ -45,6 +47,13 @@
                 ],
             }
         },
+
+        methods: {
+            toggleBackdrop() {
+                const backdrop = document.getElementById('backdrop');
+                backdrop.classList.toggle('d-none');
+            }
+        }
     }
 
 </script>
@@ -60,5 +69,28 @@
             height: 100%;
 
         }
+
+        .backdrop {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998; /* Assicurati che sia sotto la navbar ma sopra il resto */
+        }
+    }
+
+
+
+    @media screen and (max-width: 768px) {
+        #navbarLink {
+            position: absolute;
+            left: 0px;
+            z-index: 1000;
+            width: 100%;
+            padding: 5px;
+        }
+        
     }
 </style>

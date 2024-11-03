@@ -11,14 +11,14 @@
             </button>
         </div>
         <div class="d-flex align-items-center justify-content-center" v-for="(city, index) in data_weater" :key="index">
-            <div id="favorites">
+            <div id="favorites" class="d-flex flex-column flex-md-row h-100 p-3 gap-3 gap-md-0 my-3 my-md-1">
                 <!--data_weater contains current, daily and hourly weather data. Using the current data dynamically we will always get up to date data -->
-                <h4 id="city">{{ city.city }}</h4>
+                <h4 id="city" class="text-center text-md-start">{{ city.city }}</h4>
                 <div id="img">
-                    <img class="img-fluid mx-3" :src="store.methods.changeImg(city.data.daily.weather_code[0])" alt="">
+                    <img class="img-fluid" :src="store.methods.changeImg(city.data.daily.weather_code[0])" alt="">
                 </div>
                 <p><i class="fa-solid fa-temperature-low fs-2"></i> {{ city.data.current.temperature_2m }} C°</p>
-                <p>Wind Max Speed: {{ city.data.daily.wind_speed_10m_max[0] }} km/h</p>
+                <p>Max Wind: {{ city.data.daily.wind_speed_10m_max[0] }} km/h</p>
                 <p>Humidity: {{ city.data.current.relative_humidity_2m }} %</p>
                 <button id="delete" class="btn btn-outline-danger rounded-circle" @click="deleteFavorites(city)"><i
                         class="fa-solid fa-circle-xmark fs-3"></i></button>
@@ -136,7 +136,7 @@
     .container {
         width: 100%;
         height: 100%;
-        margin-top: 100px;
+        margin-top: 50px;
 
 
 
@@ -151,11 +151,10 @@
         }
 
         #favorites {
-            width: 85%;
-            height: 100px;
+            width: 90%;
             background-color: rgb(222, 222, 222);
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
             font-size: 20px;
             border: 1px solid black;
@@ -164,11 +163,12 @@
 
             #city {
                 width: 130px;
+                
             }
 
             #img {
-                width: 70px;
-                margin: 0 50px;
+                width: 60px;
+                margin: 0 30px;
 
                 img {
                     width: 60px;
