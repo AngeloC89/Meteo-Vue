@@ -1,18 +1,19 @@
 <template>
-    <section id="show-info" class="row mx-auto my-5">
+    <section id="show-info" class="row mx-auto">
         <div v-if="store.city.name" class="d-flex flex-column justify-content-center align-items-center">
             <!-- shows the city and the current climate -->
-            <h1 class="text-center">{{ store.city.name }}</h1>
+            <div class="d-flex align-items-center">
+                <h1 class="text-center">{{ store.city.name }}</h1>
+                <span @click="toggleStar(store.city)" class="btn d-flex justify-content-center ms-3 m-0 p-0 border-0">
+                    <i class="m-0 p-0" :class="['fa-star', this.store.city.isFavorite_flag ? 'fa-solid' : 'fa-regular']"
+                        :title="this.store.city.isFavorite_flag ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti'"></i>
+                </span>
+            </div>
+
             <div class="d-flex gap-5">
                 <p class="text-center">Temperatura: {{ store.climate?.current?.temperature_2m }} °C</p>
                 <p class="text-center">Umidità: {{ store.climate?.current?.relative_humidity_2m }} %</p>
             </div>
-
-            <div>
-                <!-- this button add the city to favorites  -->
-                 <button class="m-auto btn btn-outline-secondary" @click="addToFavorites(store.city)">Aggiungi ai preferiti</button>
-            </div>
-           
         </div>
     </section>
 </template>
@@ -24,7 +25,8 @@
         data() {
             return {
                 store,
-              
+
+
             }
         },
         methods: {
@@ -38,17 +40,36 @@
                 );
 
                 if (!CitySaved) {
+                    this.store.city.isFavorite_flag = true;
                     //add cty to favorites
                     this.store.favorites.push(city);
                     //save the array in local storage
                     localStorage.setItem('favorites', JSON.stringify(this.store.favorites));
                     console.log(this.store.favorites);
-                    alert(`${city.name} è stata aggiunta ai preferiti!`);
+                    alert(`${city.name} è stato aggiunto ai preferiti.`);
                 } else {
                     alert(`${city.name} è già tra i preferiti.`);
                 }
-            }        
-        },     
+            },
+
+            toggleStar(city) {
+                const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                const foundCity = favorites.find(fav => fav.name === city.name && fav.isFavorite_flag === true);
+
+                if (foundCity) {
+                  this.store.methods.deleteFavorites(foundCity);
+                } else {
+                  this.addToFavorites(city);
+                }
+            }
+            
+
+        },
+
+        mounted() {
+
+
+        },
     }
 </script>
 
@@ -62,6 +83,13 @@
         justify-content: center;
         align-items: center;
 
+        i {
+            cursor: pointer;
+            font-size: 25px;
+            margin-left: 10px;
+            color: gold;
+            text-shadow: 1px 1px black;
+        }
 
     }
 </style>

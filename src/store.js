@@ -24,6 +24,7 @@ export const store = reactive({
   date_time: new Date(),//date today
   favorites: [],
   temperatures: [],
+  data_weater: [],
   loading: false,
 
   //endpoint
@@ -68,6 +69,30 @@ export const store = reactive({
       }
     },
 
+    deleteFavorites(city) {
+
+                let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+                console.log(favorites);
+
+                store.city.isFavorite_flag = false;
+
+
+                // Filtra l'array per escludere la città che vogliamo rimuovere
+                favorites = favorites.filter(item => item.name !== city.name);
+
+                // Aggiorna `localStorage` con l'array modificato
+                localStorage.setItem('favorites', JSON.stringify(favorites));
+                store.favorites = favorites;
+
+                // Filtra l'array di oggetti per escludere la city che vogliamo rimuovere e mostra dinamicamente il cambiamento
+                store.data_weater = store.data_weater.filter(weatherItem => weatherItem.name !== city.name);
+
+
+
+                // Mostra un messaggio per confermare la rimozione
+                alert(`${city.name} è stata rimossa dai preferiti.`);
+            },
   
   },
 });

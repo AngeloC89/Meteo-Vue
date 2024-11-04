@@ -41,7 +41,6 @@
                     //console.log(response.data.results[0]);
                     if (!response.data.results) {
                         const messageElement = document.getElementById("message");
-                        messageElement.classList.add("alert-danger");
                         messageElement.innerHTML = "City not found";
                         return;
                     };
@@ -53,11 +52,12 @@
                     this.store.city = {
                         name: results.name,
                         lat: results.latitude,
-                        lon: results.longitude
+                        lon: results.longitude,
+                        isFavorite_flag: '',
                     };
 
 
-
+                    this.checkIfFavorite(this.store.city);//check if the city is in the favorites
                     console.log(this.store.city);
                     this.fetchClimate(this.store.city.lat, this.store.city.lon);//This function is called after performing city search and finds the weather data for the city
                 } catch (error) {
@@ -83,14 +83,25 @@
                     );
                     this.store.climate = response.data;
                     this.store.temperatures = response.data.hourly.temperature_2m;
-                    console.log(this.store.climate);
-                    console.log(this.store.temperatures.slice(0, 24));
+                    //console.log(this.store.climate);
+                    //console.log(this.store.temperatures.slice(0, 24));
 
 
                 } catch (error) {
                     console.error("Errore nel recupero dei dati", error);
                 } finally {
 
+                }
+            },
+
+            checkIfFavorite(city) {
+                const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+                const foundCity = favorites.find(fav => fav.name === city.name);
+
+                if (foundCity) {
+                    city.isFavorite_flag = true; // Imposta il flag su true se la città è nei preferiti
+                } else {
+                    city.isFavorite_flag = false; // Altrimenti, impostalo su false
                 }
             },
 

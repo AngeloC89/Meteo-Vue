@@ -1,5 +1,5 @@
 <template>
-    <section class="row mx-auto my-5">
+    <section class="row mx-auto mb-5">
         <!-- print the data (today and next 2 days) -->
         <div id="daily" class="col-4" v-for="(date, index) in store.climate?.daily?.time" :key="index">
             <div class="text-center">{{ date }}</div>
