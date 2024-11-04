@@ -83,7 +83,7 @@
                     );
                     this.store.climate = response.data;
                     this.store.temperatures = response.data.hourly.temperature_2m;
-                    //console.log(this.store.climate);
+                    console.log(this.store.climate);
                     //console.log(this.store.temperatures.slice(0, 24));
 
 
