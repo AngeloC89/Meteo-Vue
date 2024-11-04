@@ -3,7 +3,7 @@
         <div v-if="store.city.name" class="d-flex flex-column justify-content-center align-items-center">
             <!-- shows the city and the current climate -->
             <div class="d-flex align-items-center">
-                <h1 class="text-center">{{ store.city.name }}</h1>
+                <h1 class="text-center m-0">{{ store.city.name }}</h1>
                 <span @click="toggleStar(store.city)" class="btn d-flex justify-content-center ms-3 m-0 p-0 border-0">
                     <i class="m-0 p-0" :class="['fa-star', this.store.city.isFavorite_flag ? 'fa-solid' : 'fa-regular']"
                         :title="this.store.city.isFavorite_flag ? 'Rimuovi dai preferiti' : 'Aggiungi ai preferiti'"></i>
@@ -46,6 +46,7 @@
                     //save the array in local storage
                     localStorage.setItem('favorites', JSON.stringify(this.store.favorites));
                     console.log(this.store.favorites);
+                    //
                     alert(`${city.name} è stato aggiunto ai preferiti.`);
                 } else {
                     alert(`${city.name} è già tra i preferiti.`);
